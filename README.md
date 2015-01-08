@@ -30,10 +30,9 @@ There is also 1 parallel implementation of the algorithm with openMP:
 All the algorithms take as first argument an integer A and they create a square array AxA.
 
 ## Compilation & Execution
+
 First of all, you have to make sure you have installed in your machine :
-![image](http://upload.wikimedia.org/wikipedia/en/thumb/2/27/Openmp.png/180px-Openmp.png =60x60)
 * openMP (http://openmp.org/wp/), which is pre-installed in some compilers
-![image](http://www.open-mpi.org/images/open-mpi-logo.png =60x60)
 * openMPI(http://www.open-mpi.org/), which can be installed 
 
 In order to execute all the different algorithms and compare their results, execute the following commands (adjust 4 to the cores of your machine):
