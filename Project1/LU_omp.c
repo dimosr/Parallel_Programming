@@ -1,8 +1,16 @@
-/**********************************************************************
-Modify the code-Add OpenMP directives to parallelize the LU kernel
-***********************************************************************/
-
-
+/**************************************************
+# Copyright (C) 2014 Raptis Dimos <raptis.dimos@yahoo.gr>
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+# **************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,7 +25,6 @@ int main(int argc, char * argv[])
     int Y=X;
     double ** A=malloc2D(X,Y);
     init2D(A,X,Y);
-    print2D(A,X,Y);
     int i,j,k;
     double l;
     struct timeval ts,tf;
@@ -39,6 +46,5 @@ int main(int argc, char * argv[])
 	total_time=(tf.tv_sec-ts.tv_sec)+(tf.tv_usec-ts.tv_usec)*0.000001;
 	printf("LU-OpenMP\t%d\t%.3lf\n",X,total_time);
     char * filename="output_omp";
-	print2DFile(A,X,Y,filename);
 	return 0;
 }

@@ -1,3 +1,17 @@
+/**************************************************
+# Copyright (C) 2014 Raptis Dimos <raptis.dimos@yahoo.gr>
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+# **************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <mpi.h>
@@ -61,65 +75,56 @@ int main (int argc, char * argv[]) {
 	MPI_Barrier(MPI_COMM_WORLD);
     gettimeofday(&ts,NULL);        
 
-    /******************************************************************************
-     The matrix A is distributed in a round-robin fashion to the local matrices localA
-     You have to use point-to-point communication routines.
-     Don't forget the timers for computation and communication!
-        
-    ******************************************************************************/
-        for (k=0;k<X-1;k++)
-        {
-        	if ( rank == (k % size)  ){             //an einai o pirinas pou prepei na steilei
-                	for(thread=0;thread < size;thread++){           //sto variable thread o pirinas ston opoio tha steilei
-                        	if(thread != (k % size) ){
-					gettimeofday(&time1,NULL);              //an den eimai egw o idios (pirinas),steile
-                                	MPI_Send(&(localA[k / size][0]),Y,MPI_DOUBLE,thread,55,MPI_COMM_WORLD);
+
+    for (k=0;k<X-1;k++){
+        if ( rank == (k % size)  ){             
+            for(thread=0;thread < size;thread++){           
+                if(thread != (k % size) ){
+					gettimeofday(&time1,NULL);              
+                    MPI_Send(&(localA[k / size][0]),Y,MPI_DOUBLE,thread,55,MPI_COMM_WORLD);
 					gettimeofday(&time2,NULL);
-                                }
-                        }
                 }
-                else {          //edw mpainoun oloi oi ipoloipoi gia na lavoun
-                                gettimeofday(&time1,NULL);
-
-                                MPI_Recv(&(temp_line[0]),Y,MPI_DOUBLE,(k % size),55,MPI_COMM_WORLD,&status);
-				gettimeofday(&time2,NULL);
-                }
-		communication_time+=time2.tv_sec-time1.tv_sec+(time2.tv_usec-time1.tv_usec)*0.000001;
-                if(k < ((X-size)+rank) ){       //edw mpainoune osa threads einai "akoma sto paixnidi"|| (X-size) -->1 block prin to telos
-
-                        if(k < rank ){             //vrisketai prin tin 1i grammi tou
-                                        initial = 0;
-                        }
-                        else{                                   //exei perasei tin 1i grammi tou
-
-                                if(rank <= (k % size) ){
-                                        help = 1;
-                                }
-                                else{
-                                        help = 0;
-                                }
-                                initial = ((k / size ) + help);
-                        }
-                        for(i= initial ;i<x ;i++){
-
-                                if( rank != (k % size) ){               //an auto to thread exei lavei, xrisimopoiei to temp_line
-                                        l = localA[i][k] / temp_line[k];
-
-                                        for(j=k;j<X;j++){
-                                        	localA[i][j] = localA[i][j]-l*temp_line[j];
-                                        }
-                                }
-                                else{           //alliws xrisimopoiei tin diki tou grammi
-                                        l = localA[i][k] / localA[k / size][k];
-                                        for(j=k;j<X;j++){
-                                        	localA[i][j] = localA[i][j]-l*localA[k / size][j];
-
-                                        }
-                                }
-                        }
-                }
+            }
         }
+        else {          
+            gettimeofday(&time1,NULL);
+            MPI_Recv(&(temp_line[0]),Y,MPI_DOUBLE,(k % size),55,MPI_COMM_WORLD,&status);
+			gettimeofday(&time2,NULL);
+        }
+		communication_time+=time2.tv_sec-time1.tv_sec+(time2.tv_usec-time1.tv_usec)*0.000001;
+        if(k < ((X-size)+rank) ){       
 
+            if(k < rank ){            
+                initial = 0;
+            }
+            else{                                  
+
+                if(rank <= (k % size) ){
+                    help = 1;
+                }
+                else{
+                    help = 0;
+                }
+                initial = ((k / size ) + help);
+            }
+            for(i= initial ;i<x ;i++){
+
+                if( rank != (k % size) ){              
+                    l = localA[i][k] / temp_line[k];
+
+                    for(j=k;j<X;j++){
+                        localA[i][j] = localA[i][j]-l*temp_line[j];
+                    }
+                }
+                else{           
+                    l = localA[i][k] / localA[k / size][k];
+                    for(j=k;j<X;j++){
+                        localA[i][j] = localA[i][j]-l*localA[k / size][j];
+                    }
+                }
+            }
+        }
+    }
 
     gettimeofday(&tf,NULL);
     total_time=tf.tv_sec-ts.tv_sec+(tf.tv_usec-ts.tv_usec)*0.000001;
