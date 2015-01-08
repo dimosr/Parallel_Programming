@@ -31,9 +31,9 @@ All the algorithms take as first argument an integer A and they create a square 
 
 ## Compilation & Execution
 First of all, you have to make sure you have installed in your machine :
-![alt text](http://upload.wikimedia.org/wikipedia/en/thumb/2/27/Openmp.png/180px-Openmp.png "openMP image")
+![image](http://upload.wikimedia.org/wikipedia/en/thumb/2/27/Openmp.png/180px-Openmp.png =60x60)
 * openMP (http://openmp.org/wp/), which is pre-installed in some compilers
-![alt text](http://www.open-mpi.org/images/open-mpi-logo.png "openMPI image")
+![image](http://www.open-mpi.org/images/open-mpi-logo.png =60x60)
 * openMPI(http://www.open-mpi.org/), which can be installed 
 
 In order to execute all the different algorithms and compare their results, execute the following commands (adjust 4 to the cores of your machine):
