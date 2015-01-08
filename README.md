@@ -1,37 +1,52 @@
+Parallel Programming <br/>(CUDA, openMP, MPI)
+============================================
 
+Introduction
+--------------------------------------------
+This repository contains some implementations of parallel programming.
+3 technologies are used : 
+	* openMP for shared memory topologies 
+	* openMPI for distributed memory topologies
+	* CUDA for GPUs (graphic processing units)
 
-		-------------------------------------------------
-		|						|
-		|    Parallel Programming (CUDA, openMP, MPI)   |
-		|						|
-		-------------------------------------------------
+Project 1
+--------------------------------------------
 
+## Description
 
-	This repository contains some implementations of parallel programming.
-	3 technologies are used : 
-	- openMP for shared memory topologies 
-	- openMPI for distributed memory topologies
-	- CUDA for GPUs (graphic processing units)
-
------------------------------ Project 1 --------------------------------
-
-This project contains parallel implementations for the Gauss algorithm 
-for linear systems using openMP and openMPI and comparing the parallelization
-and time gain.
-
+This project contains parallelized implementations for the Gauss algorithm  for linear systems using openMP and openMPI and comparing the parallelization
+and time gain between various parallel implementations and the serial one.
 In the file LU_serial.c, the original serial code has been given.
-There are 4 parallel implementations of the algorithm with openMPI:
-- LU_block_bcast : 	continuous block allocation of data to processes
-				   	broadcast communication between processes
-- LU_block_p2p : 	continuous block allocation of data to processes
-					p2p communication between processes
-- LU_cyclic_bcast :	cyclic (line-by-line) allocation of data to processes
-					broadcast communication between processes
-- LU_cyclic_p2p :	cyclic (line-by-line) allocation of data to processes
-					p2p communication between processes
+
+There are 4 parallel implementations of the algorithm with openMPI that differ in the type of data allocation and in the type of communication between the processes. The 1st type of data allocation is continous block allocation. So, if we have an array of 100x100 elements and n processes, the first 100/n lines of the array are allocated to the first process, the next 100/n lines are allocated to the next process. The 2nd type of data allocation is cyclic allocation of data. So, if we have an array of 100x100 elements and n processes, the first lines is allocated to the first process, the second line to the second process, ..., the n+1 line again to the first process etc. We also have 2 types of communication : broadcast communication and p2p communication. In broadcast communication, when a process has a result, it broadcasts the result to all processes. In the p2p communication, each process sends the calculated data only to the process that will use it. An algorithm has been implemented for each different combination of allocation type and communication type :
+* LU_block_bcast : block data allocation & broadcast communication
+* LU_block_p2p : block data allocation & p2p communication
+* LU_cyclic_bcast :	cyclic data allocation & broadcast communication
+* LU_cyclic_p2p : cyclic data allocation & p2p communication
 
 There is also 1 parallel implementation of the algorithm with openMP:
-- LU_omp
+* LU_omp
+
+All the algorithms take as first argument an integer A and they create a square array AxA.
+
+## Compilation & Execution
+First of all, you have to make sure you have installed in your machine :
+* openMP (http://openmp.org/wp/)![alt text](http://upload.wikimedia.org/wikipedia/en/thumb/2/27/Openmp.png/180px-Openmp.png "openMP image"), which is pre-installed in some compilers
+* openMPI(http://www.open-mpi.org/)![alt text](http://www.open-mpi.org/images/open-mpi-logo.png "openMPI image"), which can be installed 
+
+In order to execute all the different algorithms and compare their results, execute the following commands (adjust 4 to the cores of your machine):
+```sh
+make
+./lu_serial 1500 			#execution of the serial algorithm
+
+export OMP_NUM_THREADS=4	#define number of threads that will execute
+./lu_omp 1500				#execution of the openMP algorithm
+
+mpirun -np 4 ./lu_block_bcast 1500
+mpirun -np 4 ./lu_block_p2p 1500
+mpirun -np 4 ./lu_cyclic_bcast 1500
+mpirun -np 4 ./lu_cyclic_p2p 1500
+```
 
 
 ----------------------------- Project 2 --------------------------------
