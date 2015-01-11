@@ -49,30 +49,58 @@ mpirun -np 4 ./lu_cyclic_bcast 1500
 mpirun -np 4 ./lu_cyclic_p2p 1500
 ```
 
+Project 2
+-------------------------------------------------------------
 
------------------------------ Project 2 --------------------------------
+## Description
 
-This project contains parallel implementations for the algorithm used 
-for 2-Dimension matrix multiplication with openMP.
+This project contains parallelized implementations for the algorithm used for 2-Dimension matrix multiplication with openMP and [Cilk](https://software.intel.com/en-us/intel-cilk-plus).
 2 kinds of algorithms are used as beginning to work on :
 - serial : the classic algorithm
-- tiled : a block-tiled improced algorithm
+- tiled : a block-tiled improved algorithm
 - recursive : a much more improved algorithm using recusrion
 - strassen : the most improved version of the algorithm
-All those initial forms are placed in folder "Original Code"
+All those initial forms are placed in the folder "Original Code" (those are initial implementations using openMP).
+Then, we use Cilk to create more improved versions of those algorithms.
 
-In the folder "Serial", there are 2 improved versions of serial algorithm :
+In the folder "Serial", there are 2 improved versions of serial algorithm:
 - mm_serial_for 
 - mm_serial_spawn
 
 In the folder "Tiled", there is 1 improved version of tiled algorithm :
 - par_mm_tiled2_c_j
 
-In the folder "Recursive", there is 1 improved version of recursive algorithm :
+In the folder "Recursive", there is 1 improved version of recursive algorithm using:
 - mm_recursive
 
 In the folder "Strassen", there is 1 improvred version of strassen algorithm :
 - mm_parallel_strassen
+
+## Compilation & Execution
+
+First of all, you have to also install [Cilk](https://software.intel.com/en-us/intel-cilk-plus).
+You can test each different version of the algorithm and compare their performance executing the following commands :
+```sh
+#In folder Original Code
+make
+./serial 800 100           #comparing performance for array of 800 elements with blocks in size of 10 elements
+./tiled 800 10
+./recursive 800 10
+./strassen 800 10
+
+#In folder Recursive
+make
+./recursive 800 10
+
+#In folder Serial
+make
+./serial_spawn 800 10
+./serial_for 800 10
+
+#In folder strassen
+make
+./parallel_strassen 800 10
+```
 
 ----------------------------- Project 3 --------------------------------
 
