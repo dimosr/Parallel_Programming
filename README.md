@@ -102,19 +102,19 @@ make
 ./parallel_strassen 800 10
 ```
 
------------------------------ Project 3 --------------------------------
+Project 3
+-------------------------------------------------------------
 
-This repository contains a parallel implementation of the algorithm of 
-Floyd-Warshall. For this reason, an NVIDIA GPU was used and the parallelization
-was implemented with CUDA. There are 3 different implementations based on the 
-basic algorithm, the tiled algorithm and a last one using the on-chip shared
-memory of the GPU.
+## Description
+
+This repository contains a parallelized implementation of the algorithm of Floyd-Warshall using [Cuda](https://developer.nvidia.com/about-cuda). For this reason, the code was transformed using CUDA language and an NVIDIA GPU was used in order to test the improved version and compare the performance. There are 3 different implementations based on the basic algorithm:
+- the basic implementation in CUDA
+- the tiled algorithm implemented in CUDA
+- the tiled algorithm implemented in CUDA and using the shared memory of the chip
 
 The various files are serving the below functions :
-- apsp_main.c reads the input parameters, creates the graph, executes and 
-monitors the time of each kernel (gpu & cpu), and validates the results
-- graph.c & graph.h contain helping functionalities about the graph, as well
-as the various versions of Floyd-Warshall algorithm.
+- apsp_main.c reads the input parameters, creates the graph, executes and monitors the time of each kernel (gpu & cpu), and validates the results
+- graph.c & graph.h contain helping functionalities about the graph, as well as the various versions of Floyd-Warshall algorithm.
 - cpu_kernels.c &cpu_kernels.h, calls the routines of graph.c for the cpu kernels
 - gpu_kernels.cu making everything that is necessary to call the gpu kernels
 (memory allocation in GPU, copy from/to GPU, parameters of kernels etc.)
@@ -136,3 +136,8 @@ The same phases exist in the shared memory implementation, just with the differe
 that the data are first copied in the shared memory of the GPU and then
 used from there for the rest execution.
 
+## Compilation & Execution
+make        #make DEBUG=0, if you want to test performance-time
+./gpuinfo   #to take information about your GPU
+export KERNEL=4
+./apsp_main 4096        #execute the algorithm in GPU using 4 kernels
