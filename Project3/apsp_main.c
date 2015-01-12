@@ -1,8 +1,20 @@
+/**************************************************
+# Copyright (C) 2014 Raptis Dimos <raptis.dimos@yahoo.gr>
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+# **************************************************/
+
 /*
  *  apsp_main.c -- APSP front-end program
- *
  *  Copyright (C) 2010-2014, Computing Systems Laboratory (CSLab)
- *  Copyright (C) 2010-2014, Vasileios Karakasis
  */ 
 
 #include <stdlib.h>
@@ -21,7 +33,7 @@ static void check_result(const graph_t *test, const graph_t *orig)
 {
     printf("Checking ... ");
     fflush(stdout);
-    FILE *f = fopen("2.1-Disdiastata.txt","a");//check line 46
+    FILE *f = fopen("2.1-2Dimensions.txt","a");
     if (f == NULL)
     {
     printf("Error opening file!\n");
@@ -43,7 +55,7 @@ static void check_result(const graph_t *test, const graph_t *orig)
 static void report_results(xtimer_t *timer, size_t nr_edges,char *kernel,size_t nr_vertices)
 {
     double elapsed_time = timer_elapsed_time(timer);
-    FILE *f = fopen("2.1-Disdiastata.txt","a");//check line 24
+    FILE *f = fopen("2.1-2Dimensions.txt","a");
     if (f == NULL)
     {
     printf("Error opening file!\n");

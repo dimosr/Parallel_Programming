@@ -1,8 +1,20 @@
+/**************************************************
+# Copyright (C) 2014 Raptis Dimos <raptis.dimos@yahoo.gr>
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+# **************************************************/
+
 /*
  *  graph.h -- Graph implementation
- *
  *  Copyright (C) 2010-2014, Computing Systems Laboratory (CSLab)
- *  Copyright (C) 2010-2014, Vasileios Karakasis
  */ 
 
 #include <math.h>
@@ -97,7 +109,7 @@ int graph_equals(const graph_t *g1, const graph_t *g2)
         for (size_t j = 0; j < g2->nr_vertices; ++j)
             if (ABS(g1->weights[i+g1->i_off][j+g1->j_off] -
                     g2->weights[i+g2->i_off][j+g2->j_off]) > EPS) {
-	      //                printf("I was checking the graph that omp_naive creates versus your graph!As i was checking the element [%d][%d] i found that %f != %f so the graphs are not the same!\n",i,j,g1->weights[i+g1->i_off][j+g1->j_off],g2->weights[i+g2->i_off][j+g2->j_off]);
+	                   //printf("I was checking the graph that omp_naive creates versus your graph!As i was checking the element [%d][%d] i found that %f != %f so the graphs are not the same!\n",i,j,g1->weights[i+g1->i_off][j+g1->j_off],g2->weights[i+g2->i_off][j+g2->j_off]);
                 return 0;
             }
 

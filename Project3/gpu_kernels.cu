@@ -1,8 +1,20 @@
+/**************************************************
+# Copyright (C) 2014 Raptis Dimos <raptis.dimos@yahoo.gr>
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+# **************************************************/
+
 /*
  *  gpu_kernels.cu -- GPU kernels
- *
  *  Copyright (C) 2014, Computing Systems Laboratory (CSLab)
- *  Copyright (C) 2014, Vasileios Karakasis
  */ 
 
 #include <stdio.h>
@@ -303,7 +315,6 @@ graph_t *MAKE_KERNEL_NAME(_gpu, _tiled)(graph_t *graph)
     //dim3 dimBlock(GPU_TILE_DIM,GPU_TILE_DIM);
 
     /*
-     * FILLME: Set up and launch the kernel(s)
      *
      * You may need different grid/block configurations for each stage
      * of the computation
@@ -312,6 +323,7 @@ graph_t *MAKE_KERNEL_NAME(_gpu, _tiled)(graph_t *graph)
      * adjust its value during compilation. See `make help' for more
      * information.
      */
+
      for(k=0; k<tiles_number_diagonally; k++){
             /* --- PHASE 1 ---*/
 	    dim3 dimGrid(1,1);
@@ -373,7 +385,6 @@ graph_t *MAKE_KERNEL_NAME(_gpu, _tiled_shmem)(graph_t *graph)
     //dim3 dimBlock(GPU_TILE_DIM,GPU_TILE_DIM);
 
     /*
-     * FILLME: Set up and launch the kernel(s)
      *
      * You may need different grid/block configurations for each stage
      * of the computation
