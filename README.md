@@ -145,4 +145,4 @@ make        #make DEBUG=0, if you want to test performance-time
 ./gpuinfo   #to take information about your GPU
 export KERNEL=4
 ./apsp_main 4096        #execute the algorithm in GPU using 4 kernels
-```sh
+```
