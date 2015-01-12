@@ -137,7 +137,12 @@ that the data are first copied in the shared memory of the GPU and then
 used from there for the rest execution.
 
 ## Compilation & Execution
+
+First of all, you have to connect a GPU to your machine and install and configure CUDA.
+Then, you can compile and execute the project with the following commands (Makefile may need some changes to the GPU-specific configurations) :
+```sh
 make        #make DEBUG=0, if you want to test performance-time
 ./gpuinfo   #to take information about your GPU
 export KERNEL=4
 ./apsp_main 4096        #execute the algorithm in GPU using 4 kernels
+```sh
